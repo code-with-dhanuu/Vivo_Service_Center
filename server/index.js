@@ -185,9 +185,9 @@ app.put('/device/:_id' , async(req , res)=>{
 
 app.post('/service' , async(req ,res)=>{
     try{
-        const {customerName ,deviceId ,requestDate ,status ,details}=req.body;
+        const {deviceId ,requestDate ,status ,details}=req.body;
         const servicepost = await Request.create({
-            customerName:customerName, 
+            // customerName:customerName, 
             deviceId:deviceId,
             requestDate:requestDate,
             status:status,

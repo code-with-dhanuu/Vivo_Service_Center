@@ -4,10 +4,10 @@ import {Schema , model} from 'mongoose'
 
 const serviceSchema = Schema(
     {
-        customerName: {
-            type: String,
-             required: true
-            },
+        // customerName: {
+        //     type: String,
+        //      required: true
+        //     },
         deviceId: {
             type: Schema.Types.ObjectId,
             ref: 'Device',
