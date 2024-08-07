@@ -4,7 +4,7 @@ import cors from 'cors'
 import User from "./Models/UserSchema.js";
 import Device from './Models/DeviceSchema.js';
 import Request from './Models/CrequestSchema.js';
-
+import Phone from './Models/PhoneSchema.js';
 
 const app = express();
 app.use(express.json());
@@ -150,6 +150,12 @@ app.delete('/device/:_id' , async(req , res)=>{
          const {model}= req.body;
          const {_id} = req.params;
          const deldevice=await Device.deleteOne({_id:_id});
+         res.json({
+            Success: true,
+            _id: _id,
+            data: deldevice,
+            msg: `${model}Student details deleted sucessfully `
+        })
     }catch(error){
       res.json({
         Success: false,
@@ -222,3 +228,95 @@ app.get('/services' , async(req , res)=>{
    }
 })
 
+
+
+
+//Add Phone post API
+
+app.post('/phone', async(req , res)=>{
+    try{
+         const {img , dname ,gb ,category ,price} =req.body;
+         const addphone= await Phone.create({
+            "img":img,
+            "dname":dname,
+            "gb":gb,
+            "category":category,
+            "price":price
+         })
+         res.json({
+            Success:true,
+            data:addphone,
+            msg:`${dname} was added`
+         })
+    }catch(error){
+        res.json({
+            Success:false,
+            msg:error.message
+        })
+    }
+})
+
+//Phone all details get api
+
+app.get('/phones' , async(req , res)=>{
+    try{
+        const {dname}=req.body;
+        const allphones=await Phone.find();
+        res.json({
+            Sucess:true,
+            data:allphones,
+            msg:`${dname}`
+        })
+    }catch(error){
+        res.json({
+            Success: false,
+            msg: error.message
+        })
+    }
+})
+
+//delete the phone by his id
+
+app.delete('/phone/:_id' , async(req , res)=>{
+    try{
+         const {dname}= req.body;
+         const {_id} = req.params;
+         const delphone=await Phone.deleteOne({_id:_id});
+         res.json({
+            Success: true,
+            _id: _id,
+            data: delphone,
+            msg: `${dname}Student details deleted sucessfully `
+        })
+    }catch(error){
+      res.json({
+        Success: false,
+        msg: error.message
+       })
+    }
+})
+
+
+
+//update phone by id
+
+
+app.put('/phone/:_id' , async(req , res)=>{
+    try{
+          const {_id}=req.params;
+          const {img , dname ,gb ,category , price}=req.body;
+          const updatephone=await Phone.updateOne({_id:_id} ,
+            { $set:{img , dname , gb ,category ,price}}
+        );
+        res.json({
+            Success: true,
+            msg: "Device updated successfully",
+            data:updatephone
+            })
+    }catch(error){
+        res.json({
+            Success: false,
+            msg: error.message
+            })
+    }
+})
