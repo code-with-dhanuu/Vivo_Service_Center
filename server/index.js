@@ -5,6 +5,7 @@ import User from "./Models/UserSchema.js";
 import Device from './Models/DeviceSchema.js';
 import Request from './Models/CrequestSchema.js';
 import Phone from './Models/PhoneSchema.js';
+import Contact from './Models/ContactSchema.js';
 
 const app = express();
 app.use(express.json());
@@ -318,5 +319,49 @@ app.put('/phone/:_id' , async(req , res)=>{
             Success: false,
             msg: error.message
             })
+    }
+})
+
+
+
+// contact 
+
+app.post('/contact', async(req , res)=>{
+    try{
+         const {Name , Email ,Devicename ,Sversion , Query} =req.body;
+         const addContact= await Contact.create({
+            Name:Name,
+            Email:Email,
+            Devicename:Devicename,
+            Sversion:Sversion,
+            Query:Query
+         })
+         res.json({
+            Success:true,
+            data:addContact,
+            msg:"contact details stored successfully"
+         })
+    }catch(error){
+        res.json({
+            Success:false,
+            msg:error.message
+        })
+    }
+})
+
+app.get('/contacts' , async(req , res)=>{
+    try{
+        const {Name}=req.body;
+        const allcontact=await Contact.find();
+        res.json({
+            Sucess:true,
+            data:allcontact,
+            msg:`${Name}`
+        })
+    }catch(error){
+        res.json({
+            Success: false,
+            msg: error.message
+        })
     }
 })
