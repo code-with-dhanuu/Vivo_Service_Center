@@ -287,7 +287,7 @@ app.delete('/phone/:_id' , async(req , res)=>{
             Success: true,
             _id: _id,
             data: delphone,
-            msg: `${dname}Student details deleted sucessfully `
+            msg: `${dname}  deleted sucessfully `
         })
     }catch(error){
       res.json({
